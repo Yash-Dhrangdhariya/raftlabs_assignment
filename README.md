@@ -13,3 +13,10 @@ A new Flutter project.
 
 - Login Screen --> if Authenticated --> Splash Screen --> Home Screen --> Users, Post News Screen
 
+## Setup
+
+    run: flutter pub get
+
+    run: flutter pub run build_runner watch --delete-conflicting-outputs
+
+    run: flutter run 

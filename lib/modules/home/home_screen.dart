@@ -21,11 +21,11 @@ class HomeScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
-            heroTag: 'search',
+            heroTag: 'users',
             onPressed: () => Modular.to.pushNamed(
               AppRoutes.usersScreen,
             ),
-            child: const Icon(Icons.search),
+            child: const Icon(Icons.person_search),
           ),
           const SizedBox(
             width: 20,
