@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "428038298163",
+    "project_id": "raftlabs-assignment",
+    "storage_bucket": "raftlabs-assignment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428038298163:android:520285aff135232ff76146",
+        "android_client_info": {
+          "package_name": "com.yashdhrangdhariya.raftlabs_assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428038298163-seflf1s8chdfth97d7nilgd8vbhnt8gp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yashdhrangdhariya.raftlabs_assignment",
+            "certificate_hash": "c5abd490035c3d93a25981048c18dac21434f864"
+          }
+        },
+        {
+          "client_id": "428038298163-91curtmufdjrsvi2juu79mkue2r6679l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdLJwnb5Djw1GXoQAwgTJAS4KW2q73XV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428038298163-91curtmufdjrsvi2juu79mkue2r6679l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "428038298163-5mcp60npt9kq0ca8rusu871n2je89omq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yashdhrangdhariya.raftlabsAssignment"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
