@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                     horizontal: 20,
                   ),
                   child: Mutation(
-                    options: GraphQLService().createUser(),
+                    options: GraphQLService().mutationForCreateUser(),
                     builder: (runMutation, result) => Observer(
                       builder: (context) {
                         return FilledButton(

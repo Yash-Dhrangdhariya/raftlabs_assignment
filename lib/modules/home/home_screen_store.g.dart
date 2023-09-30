@@ -25,6 +25,22 @@ mixin _$HomeScreenStore on _HomeScreenStore, Store {
     });
   }
 
+  late final _$isNewsLoadingAtom =
+      Atom(name: '_HomeScreenStore.isNewsLoading', context: context);
+
+  @override
+  bool get isNewsLoading {
+    _$isNewsLoadingAtom.reportRead();
+    return super.isNewsLoading;
+  }
+
+  @override
+  set isNewsLoading(bool value) {
+    _$isNewsLoadingAtom.reportWrite(value, super.isNewsLoading, () {
+      super.isNewsLoading = value;
+    });
+  }
+
   late final _$currentUserAtom =
       Atom(name: '_HomeScreenStore.currentUser', context: context);
 
@@ -41,11 +57,28 @@ mixin _$HomeScreenStore on _HomeScreenStore, Store {
     });
   }
 
+  late final _$newsAtom = Atom(name: '_HomeScreenStore.news', context: context);
+
+  @override
+  ObservableList<NewsModel> get news {
+    _$newsAtom.reportRead();
+    return super.news;
+  }
+
+  @override
+  set news(ObservableList<NewsModel> value) {
+    _$newsAtom.reportWrite(value, super.news, () {
+      super.news = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
-currentUser: ${currentUser}
+isNewsLoading: ${isNewsLoading},
+currentUser: ${currentUser},
+news: ${news}
     ''';
   }
 }

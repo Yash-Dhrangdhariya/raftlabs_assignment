@@ -1,9 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:raftlabs_assignment/models/news_model.dart';
 import 'package:raftlabs_assignment/models/user_model.dart';
+import 'package:raftlabs_assignment/services/graphql/graphql_mutations.dart';
+import 'package:raftlabs_assignment/services/graphql/graphql_queries.dart';
 import 'package:raftlabs_assignment/values/app_constants.dart';
 
 class GraphQLService {
@@ -15,7 +16,7 @@ class GraphQLService {
 
   Future<UserModel?> getUsers(String userId) async {
     final result = await AppConstants.graphqlClient.query(
-      getCurrentUser(userId),
+      queryGetUserById(userId: userId),
     );
 
     if (result.hasException) {
@@ -33,7 +34,10 @@ class GraphQLService {
 
   Future<List<NewsModel>> getNewsByUser(String userId) async {
     final result = await AppConstants.graphqlClient.query(
-      queryGetNews(userId),
+      queryGetNews(
+        userId: userId,
+        pollInterval: const Duration(seconds: 2),
+      ),
     );
 
     if (result.hasException) {
@@ -54,9 +58,9 @@ class GraphQLService {
     return [];
   }
 
-  Future<void> postNews(NewsModel news) async {
+  Future<void> postNews({required NewsModel news}) async {
     final result = await AppConstants.graphqlClient.mutate(
-      createNews(news),
+      mutationCreateNewsArticle(news: news),
     );
 
     if (result.hasException) {
@@ -65,49 +69,47 @@ class GraphQLService {
     }
   }
 
-  MutationOptions createUser() => MutationOptions(
-        document: gql(
-          r'''
-          mutation CreateUserIfNotExists($name: String!, $userId: String!, $email: String!, $avatar: String!) {
-            createUserIfNotExists(name: $name, userId: $userId, email: $email, avatar: $avatar) {
-              _id
-              name
-              userId
-              email
-              avatar
-              news
-              followings
-              followers
-            }
-          }
-        ''',
-        ),
-        update: (cache, result) => cache,
-        onCompleted: (dynamic resultData) {
-          debugPrint(resultData.toString());
+  /// for retrieving single user info by userID
+  QueryOptions queryGetUserById({required String userId}) => QueryOptions(
+        document: gql(GraphQLQueries().userById),
+        variables: {
+          'userId': userId,
         },
       );
 
-  MutationOptions createNews(NewsModel news) => MutationOptions(
-        document: gql(
-          r'''
-          mutation CreateNewsArticle($author: String!, $authorId: String!, $title: String!, $description: String!, $image: String!) {
-            createNewsArticle(author: $author, authorId: $authorId, title: $title, description: $description, image: $image) {
-              _id
-              author
-              title
-              description
-              image
-              authorId
-              publishedAt
-            }
-          }
-        ''',
-        ),
-        update: (cache, result) => cache,
-        onCompleted: (dynamic resultData) {
-          debugPrint(resultData.toString());
+  /// for retrieving list of news user is followings
+  QueryOptions queryGetNews({
+    required String userId,
+    Duration? pollInterval,
+  }) =>
+      QueryOptions(
+        document: gql(GraphQLQueries().getNews),
+        variables: {
+          'userId': userId,
         },
+        pollInterval: pollInterval,
+      );
+
+  /// for retrieving list of users except current user
+  QueryOptions queryGetUsersExcept({required String userId}) => QueryOptions(
+        document: gql(GraphQLQueries().getUsersExcept),
+        variables: {
+          'exceptUser': userId,
+        },
+        pollInterval: const Duration(seconds: 2),
+      );
+
+  /// for adding user info into MongoDB
+  MutationOptions mutationForCreateUser() => MutationOptions(
+        document: gql(GraphQLMutations().createUserIfNotExist),
+        update: (cache, result) => cache,
+      );
+
+  /// for adding news info into MongoDB
+  MutationOptions mutationCreateNewsArticle({required NewsModel news}) =>
+      MutationOptions(
+        document: gql(GraphQLMutations().createNewsArticle),
+        update: (cache, result) => cache,
         variables: {
           'author': news.author,
           'authorId': news.authorId,
@@ -117,84 +119,9 @@ class GraphQLService {
         },
       );
 
-  QueryOptions getCurrentUser(String userId) => QueryOptions(
-        document: gql(
-          r'''
-          query Query($userId: String!) {
-            userById(userId: $userId) {
-              _id
-              name
-              userId
-              email
-              avatar
-              news
-              followings
-              followers
-            }
-          }
-          ''',
-        ),
-        variables: {
-          'userId': userId,
-        },
-      );
-
-  QueryOptions queryGetNews(String userId) => QueryOptions(
-        document: gql(
-          r'''
-          query GetNews($userId: String!) {
-            getNews(userId: $userId) {
-              _id
-              author
-              title
-              description
-              image
-              authorId
-              publishedAt
-            }
-          }
-          ''',
-        ),
-        variables: {
-          'userId': userId,
-        },
-        pollInterval: const Duration(seconds: 2),
-      );
-
-  QueryOptions queryForGetExceptUser(String userId) => QueryOptions(
-        document: gql(
-          r'''
-          query GetUsersExcept($exceptUser: String!) {
-            getUsersExcept(exceptUser: $exceptUser) {
-              _id
-              name
-              userId
-              email
-              avatar
-              news
-              followings
-              followers
-            }
-          }
-          ''',
-        ),
-        variables: {
-          'exceptUser': userId,
-        },
-        pollInterval: const Duration(seconds: 2),
-      );
-
-  MutationOptions mutationForEditUser({
-    required String senderId,
-    required String receiverId,
-  }) =>
-      MutationOptions(
-        document: gql(
-          r'''
-         mutation Followings($sendingUserId: String!, $receivingUserId: String!) {
-           followings(sendingUserId: $sendingUserId, receivingUserId: $receivingUserId)
-         }
-          ''',
-        ),
+  /// for updating user info into MongoDB (ex. followings, news, followers)
+  MutationOptions mutationForEditUser() => MutationOptions(
+        document: gql(GraphQLMutations().followings),
+        update: (cache, result) => cache,
       );
 }
