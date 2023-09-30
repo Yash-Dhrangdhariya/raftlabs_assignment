@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
 import 'package:raftlabs_assignment/modules/home/widgets/home_app_bar.dart';
 import 'package:raftlabs_assignment/modules/home/widgets/news_view.dart';
 import 'package:raftlabs_assignment/values/app_routes.dart';
@@ -11,20 +14,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          NewsView(),
-        ],
-      ),
+      body: NewsView(),
       floatingActionButton: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
             heroTag: 'users',
-            onPressed: () => Modular.to.pushNamed(
-              AppRoutes.usersScreen,
-            ),
+            onPressed: () async {
+              await Modular.to.pushNamed(
+                AppRoutes.usersScreen,
+              );
+              unawaited(
+                Modular.get<HomeScreenStore>().getNews(),
+              );
+            },
             child: const Icon(Icons.person_search),
           ),
           const SizedBox(

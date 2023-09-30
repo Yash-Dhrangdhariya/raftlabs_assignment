@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:raftlabs_assignment/models/news_model.dart';
 import 'package:raftlabs_assignment/utils/extension.dart';
+import 'package:raftlabs_assignment/values/app_colors.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({
@@ -18,7 +19,7 @@ class NewsTile extends StatelessWidget {
       height: 200,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: AppColors.greyLightColor,
           image: DecorationImage(
             image: NetworkImage(
               news.image,

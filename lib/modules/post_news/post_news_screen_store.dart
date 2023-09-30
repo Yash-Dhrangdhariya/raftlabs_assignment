@@ -81,7 +81,7 @@ abstract class _PostNewsScreenStore with Store {
         description: description ?? '-',
         image: firebaseImage,
       );
-      await GraphQLService().postNews(news);
+      await GraphQLService().postNews(news: news);
     } catch (e) {
       log(
         'Error: $e',
