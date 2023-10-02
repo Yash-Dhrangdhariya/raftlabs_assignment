@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:raftlabs_assignment/models/user_model.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_service.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
-import 'package:raftlabs_assignment/values/app_colors.dart';
+
+import '../../../src/graphql/__generated__/get_all_users.data.gql.dart';
+import '../../../values/app_colors.dart';
 
 class UserTile extends StatelessWidget {
   const UserTile({
     required this.user,
-    required this.isFollowed,
+    required this.onTapFollow,
     super.key,
   });
 
-  final UserModel user;
-  final bool isFollowed;
+  final Observable<GGetAllUsersData_getUsersExcept?> user;
+  final VoidCallback onTapFollow;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class UserTile extends StatelessWidget {
               CircleAvatar(
                 radius: 18,
                 backgroundImage: NetworkImage(
-                  user.avatar,
+                  user.value?.avatar ?? '',
                 ),
               ),
               const SizedBox(
@@ -45,7 +44,7 @@ class UserTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      user.name,
+                      user.value?.name ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -55,7 +54,7 @@ class UserTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      user.email,
+                      user.value?.email ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -68,21 +67,15 @@ class UserTile extends StatelessWidget {
               const SizedBox(
                 width: 12,
               ),
-              Mutation(
-                options: GraphQLService().mutationForEditUser(),
-                builder: (runMutation, result) {
+              Observer(
+                builder: (context) {
+                  final isFollowed = user.value?.followers.contains(
+                        SharedPreferencesHelper().getLoginUser()!.userId,
+                      ) ??
+                      false;
+
                   return FilledButton(
-                    onPressed: () {
-                      runMutation(
-                        {
-                          'sendingUserId': SharedPreferencesHelper.instance
-                              .getLoginUser()!
-                              .userId,
-                          'receivingUserId': user.userId,
-                        },
-                      );
-                      Modular.get<HomeScreenStore>().getNews();
-                    },
+                    onPressed: onTapFollow,
                     style: FilledButton.styleFrom(
                       backgroundColor: isFollowed ? Colors.white : Colors.black,
                       foregroundColor: isFollowed ? Colors.black : Colors.white,

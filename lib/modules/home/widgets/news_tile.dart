@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:raftlabs_assignment/models/news_model.dart';
+import 'package:raftlabs_assignment/src/graphql/__generated__/get_news.data.gql.dart';
 import 'package:raftlabs_assignment/utils/extension.dart';
 import 'package:raftlabs_assignment/values/app_colors.dart';
 
@@ -11,7 +11,7 @@ class NewsTile extends StatelessWidget {
     super.key,
   });
 
-  final NewsModel news;
+  final GGetNewsData_getNews? news;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class NewsTile extends StatelessWidget {
           color: AppColors.greyLightColor,
           image: DecorationImage(
             image: NetworkImage(
-              news.image,
+              news?.image ?? '-',
             ),
             fit: BoxFit.cover,
           ),
@@ -68,7 +68,7 @@ class NewsTile extends StatelessWidget {
                             vertical: 4,
                           ),
                           child: Text(
-                            (news.publishedAt ?? '').toPublishedDate(),
+                            news?.publishedAt.value.toPublishedDate() ?? '-',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
@@ -84,7 +84,7 @@ class NewsTile extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Text(
-                    news.title,
+                    news?.title ?? '-',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

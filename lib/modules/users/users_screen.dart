@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:raftlabs_assignment/modules/users/widgets/user_tile.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_service.dart';
-import 'package:raftlabs_assignment/utils/data_helper.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import 'users_screen_store.dart';
+import 'widgets/user_tile.dart';
 
 class UsersScreen extends StatelessWidget {
-  const UsersScreen({super.key});
+  UsersScreen({super.key});
+
+  final _store = Modular.get<UsersScreenStore>();
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = SharedPreferencesHelper.instance.getLoginUser()!;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
       ),
-      body: Query(
-        options: GraphQLService().queryGetUsersExcept(
-          userId: currentUser.userId,
-        ),
-        builder: (result, {refetch, fetchMore}) {
-          if (result.hasException) {
+      body: Observer(
+        builder: (context) {
+          if (_store.isLoading) {
             return const Center(
-              child: Text('Oops! Something Went Wrong!'),
+              child: CircularProgressIndicator(),
             );
           }
-          if (result.data != null) {
-            final users = DataHelper().toListOfUsers(result.data!);
-            if (users.isEmpty) {
-              return const Center(
-                child: Text('No Users'),
+          if (_store.users.isEmpty) {
+            return const Center(
+              child: Text('No Users'),
+            );
+          }
+          return ListView.separated(
+            itemCount: _store.users.length,
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(20),
+            itemBuilder: (context, index) {
+              return UserTile(
+                user: _store.users[index],
+                onTapFollow: () async {
+                  await _store.onTapFollow(
+                    receiverUserId: _store.users[index].value?.userId ?? '',
+                  );
+                },
               );
-            }
-            return ListView.separated(
-              itemCount: users.length,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(20),
-              itemBuilder: (context, index) {
-                final isFollowed =
-                    users[index].followers.contains(currentUser.userId);
-                return UserTile(
-                  user: users[index],
-                  isFollowed: isFollowed,
-                );
-              },
-              separatorBuilder: (_, __) => const SizedBox(
-                height: 20,
-              ),
-            );
-          }
-          return const Center(
-            child: Text('No Users'),
+            },
+            separatorBuilder: (_, __) => const SizedBox(
+              height: 20,
+            ),
           );
         },
       ),

@@ -45,18 +45,11 @@ dependencies:
   firebase_auth: ^4.10.0
   firebase_storage: ^11.2.6
 
-  # JSON parsing
-  json_annotation: ^4.8.1
-  freezed_annotation: ^2.4.1
-
   # Google Sign In
   google_sign_in: ^6.1.5
 
   # dependency injection system and route management
   flutter_modular: ^6.3.2
-
-  # Generate Unique ID
-  uuid: ^3.0.7
 
   # Offline Database
   shared_preferences: ^2.2.1
@@ -64,14 +57,16 @@ dependencies:
   # for selecting image
   image_picker: ^1.0.4
 
-  # for graphql queries
-  graphql_flutter: ^5.1.2
-
   # image compress
   flutter_image_compress: ^2.0.4
 
-  # Format Date
+  # Date Format
   intl: ^0.18.1
+
+  # GraphQL support
+  ferry_flutter: ^0.8.1
+  ferry: ^0.14.2+1
+  gql_http_link: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +83,7 @@ dev_dependencies:
   mobx_codegen: ^2.4.0
   json_serializable: ^6.7.1
   freezed: ^2.4.1
+  ferry_generator: ^0.8.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -100,7 +96,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-    # To add assets to your application, add an assets section, like this:
+  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
   #   - images/a_dot_ham.jpeg

@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/post_news/post_news_module.dart';
-import 'package:raftlabs_assignment/modules/splash/splash_screen.dart';
-import 'package:raftlabs_assignment/modules/users/users_screen.dart';
 
+import '../post_news/post_news_module.dart';
+import '../splash/splash_screen.dart';
+import '../users/users_module.dart';
 import 'home_screen.dart';
 import 'home_screen_store.dart';
 
@@ -22,9 +22,9 @@ class HomeModule extends Module {
         '/post/',
         module: PostNewsModule(),
       )
-      ..child(
+      ..module(
         '/users/',
-        child: (context) => const UsersScreen(),
+        module: UsersModule(),
       );
   }
 

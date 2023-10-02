@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:raftlabs_assignment/modules/login/login_screen_store.dart';
 import 'package:raftlabs_assignment/resources/images.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_service.dart';
-import 'package:raftlabs_assignment/values/app_routes.dart';
 import 'package:raftlabs_assignment/values/app_text_style.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -75,47 +72,31 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
-                  child: Mutation(
-                    options: GraphQLService().mutationForCreateUser(),
-                    builder: (runMutation, result) => Observer(
-                      builder: (context) {
-                        return FilledButton(
-                          onPressed: _store.isSignIn
-                              ? null
-                              : () async {
-                                  final user = await _store.signIn();
-                                  if (user != null) {
-                                    runMutation(
-                                      {
-                                        'name': user.name,
-                                        'userId': user.userId,
-                                        'email': user.email,
-                                        'avatar': user.avatar,
-                                      },
-                                    );
-                                    Modular.to.navigate(AppRoutes.splashScreen);
-                                  }
-                                },
-                          style: FilledButton.styleFrom(
-                            minimumSize: const Size(
-                              double.infinity,
-                              52,
-                            ),
+                  child: Observer(
+                    builder: (context) {
+                      return FilledButton(
+                        onPressed: _store.isSignIn
+                            ? null
+                            : () async => _store.signIn(),
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size(
+                            double.infinity,
+                            52,
                           ),
-                          child: _store.isSignIn
-                              ? const RepaintBoundary(
-                                  child: SizedBox(
-                                    height: 26,
-                                    width: 26,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white30,
-                                    ),
+                        ),
+                        child: _store.isSignIn
+                            ? const RepaintBoundary(
+                                child: SizedBox(
+                                  height: 26,
+                                  width: 26,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white30,
                                   ),
-                                )
-                              : const Text('Sign In'),
-                        );
-                      },
-                    ),
+                                ),
+                              )
+                            : const Text('Sign In'),
+                      );
+                    },
                   ),
                 ),
               ),

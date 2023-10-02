@@ -1,0 +1,12 @@
+query GetUser($userId: String!) {
+    userById(userId: $userId) {
+        _id
+        name
+        userId
+        email
+        avatar
+        news
+        followings
+        followers
+    }
+}

@@ -1,11 +1,12 @@
-import 'dart:async';
-
+import 'package:ferry/ferry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/modules/home/widgets/home_app_bar.dart';
-import 'package:raftlabs_assignment/modules/home/widgets/news_view.dart';
-import 'package:raftlabs_assignment/values/app_routes.dart';
+
+import '../../src/graphql/__generated__/get_news.req.gql.dart';
+import '../../values/app_routes.dart';
+import 'home_screen_store.dart';
+import 'widgets/home_app_bar.dart';
+import 'widgets/news_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,8 +25,11 @@ class HomeScreen extends StatelessWidget {
               await Modular.to.pushNamed(
                 AppRoutes.usersScreen,
               );
-              unawaited(
-                Modular.get<HomeScreenStore>().getNews(),
+              Modular.get<TypedLink>().request(
+                GGetNewsReq(
+                  (b) => b.vars.userId =
+                      Modular.get<HomeScreenStore>().user?.userId ?? '',
+                ),
               );
             },
             child: const Icon(Icons.person_search),

@@ -1,29 +1,37 @@
+import 'package:ferry/ferry.dart';
+import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/values/app_routes.dart';
 
-class SplashScreen extends StatelessObserverWidget {
+import '../../src/graphql/__generated__/get_user.req.gql.dart';
+import '../../utils/shared_preferences_helper.dart';
+import '../home/home_screen_store.dart';
+
+class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 
   final _store = Modular.get<HomeScreenStore>();
 
   @override
   Widget build(BuildContext context) {
-    if (!_store.isLoading) {
-      if (_store.currentUser != null) {
-        Modular.to.navigate(AppRoutes.homeScreen);
-      } else {
-        Modular.to.navigate(Modular.initialRoute);
-      }
-    }
-    return const Scaffold(
-      body: Center(
-        child: FlutterLogo(
-          size: 200,
-        ),
+    return Operation(
+      client: Modular.get<TypedLink>(),
+      operationRequest: GGetUserReq(
+        (b) => b.vars.userId =
+            SharedPreferencesHelper.instance.getLoginUser()?.userId,
       ),
+      builder: (context, response, error) {
+        if (response?.data != null) {
+          _store.initializeUser(response!.data?.userById);
+        }
+        return const Scaffold(
+          body: Center(
+            child: FlutterLogo(
+              size: 200,
+            ),
+          ),
+        );
+      },
     );
   }
 }

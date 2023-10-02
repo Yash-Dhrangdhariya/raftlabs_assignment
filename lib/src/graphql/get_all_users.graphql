@@ -1,0 +1,12 @@
+query GetAllUsers($exceptUser: String!) {
+    getUsersExcept(exceptUser: $exceptUser) {
+        _id
+        name
+        userId
+        email
+        avatar
+        news
+        followings
+        followers
+    }
+}

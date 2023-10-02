@@ -1,0 +1,12 @@
+mutation AddToFollow($sendingUserId: String!, $receivingUserId: String!) {
+    addToFollow(sendingUserId: $sendingUserId, receivingUserId: $receivingUserId) {
+        _id
+        name
+        userId
+        email
+        avatar
+        news
+        followings
+        followers
+    }
+}

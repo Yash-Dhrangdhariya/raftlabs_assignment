@@ -1,0 +1,11 @@
+query GetNews($userId: String!) {
+    getNews(userId: $userId) {
+        _id
+        author
+        title
+        description
+        image
+        authorId
+        publishedAt
+    }
+}

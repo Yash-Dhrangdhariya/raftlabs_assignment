@@ -52,9 +52,6 @@ class PostNewsScreen extends StatelessWidget {
                         },
                   child: const Text(
                     'Share',
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                    ),
                   ),
                 );
               },

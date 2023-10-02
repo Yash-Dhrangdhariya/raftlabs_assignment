@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:raftlabs_assignment/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../src/graphql/__generated__/create_user.data.gql.dart';
 import 'shared_preferences_keys.dart';
 
 class SharedPreferencesHelper {
+  factory SharedPreferencesHelper() => instance;
+
   const SharedPreferencesHelper._(this.prefs);
 
   final SharedPreferences prefs;
@@ -17,16 +19,16 @@ class SharedPreferencesHelper {
         await SharedPreferences.getInstance(),
       );
 
-  Future<void> setLoginUser(UserModel user) async {
+  Future<void> setLoginUser(GCreateUserData_createUserIfNotExists user) async {
     await prefs.setString(
       PrefKeys.kUserInfo,
       jsonEncode(user.toJson()),
     );
   }
 
-  UserModel? getLoginUser() {
+  GCreateUserData_createUserIfNotExists? getLoginUser() {
     return (prefs.getString(PrefKeys.kUserInfo)?.isNotEmpty ?? false)
-        ? UserModel.fromJson(
+        ? GCreateUserData_createUserIfNotExists.fromJson(
             jsonDecode(prefs.getString(PrefKeys.kUserInfo) ?? '')
                 as Map<String, dynamic>,
           )

@@ -1,0 +1,70 @@
+scalar Date
+
+type User {
+    _id: ID!
+    name: String!
+    userId: String!
+    email: String!
+    avatar: String!
+    news: [String]!
+    followings: [String]!
+    followers: [String]!
+}
+
+type News {
+    _id: ID!
+    author: String!
+    title: String!
+    description: String!
+    image: String!
+    authorId: String!
+    publishedAt: Date!
+}
+
+input UserInput {
+    name: String
+    userId: String
+    email: String
+    avatar: String
+}
+
+type Query {
+    getNews(userId: String!): [News]
+    getNewsByUser(authorId: String): [News]
+    user(ID: ID!): User!
+    userById(userId: String!): User!
+    getUsers(amount: Int): [User]
+    getUsersExcept(exceptUser: String!): [User]
+}
+
+input EditInput {
+    news: [String]
+    followings: [String]
+    followers: [String]
+}
+
+type Mutation {
+    createUser(
+        name: String!
+        userId: String!
+        email: String!
+        avatar: String!
+    ): User!
+    createUserIfNotExists(
+        name: String!
+        userId: String!
+        email: String!
+        avatar: String!
+    ): User!
+    createNewsArticle(
+        author: String!
+        authorId: String!
+        title: String!
+        description: String!
+        image: String!
+    ): News!
+    deleteUser(ID: ID!): Boolean
+    editUser(ID: ID!, editInput: EditInput): User
+    followings(sendingUserId: String!, receivingUserId: String!): String!
+    addToFollow(sendingUserId: String!, receivingUserId: String!): User!
+}

@@ -1,0 +1,12 @@
+mutation CreateUser($name: String!, $userId: String!, $email: String!, $avatar: String!) {
+    createUserIfNotExists(name: $name, userId: $userId, email: $email, avatar: $avatar) {
+        _id
+        name
+        userId
+        email
+        avatar
+        news
+        followings
+        followers
+    }
+}
