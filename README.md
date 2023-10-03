@@ -5,6 +5,12 @@
 <img width="380" alt="Screenshot 2023-09-30 at 1 10 06 AM" src="https://github.com/Yash-Dhrangdhariya/raftlabs_assignment/assets/72062416/8c5cdffa-d451-42f1-a86a-d178eccd6686">
 <img width="380" alt="Screenshot 2023-09-30 at 1 09 26 AM" src="https://github.com/Yash-Dhrangdhariya/raftlabs_assignment/assets/72062416/3cb4cb98-9d76-40c4-922a-8e73267d15d9">
 
+
+## App:
+
+- [Download .APK](https://drive.google.com/file/d/1gpW0xSdTaY5irqs13fdY6UOkxgvDiJoH/view?usp=share_link)
+- [View App Demo](https://drive.google.com/file/d/1SOPWF2bvmjLX2EEwGBOi9tsrv_sDKR-p/view?usp=share_link)
+
 ## Implemented Following Things:
 
 - User Authentication with Google Sign In (with Firebase Auth)
