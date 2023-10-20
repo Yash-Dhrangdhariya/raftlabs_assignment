@@ -1,4 +1,4 @@
-# RaftLabs Assignment
+# Social Medial App with Flutter, GraphQL
 
 <img width="380" alt="Screenshot 2023-09-30 at 1 08 31 AM" src="https://github.com/Yash-Dhrangdhariya/raftlabs_assignment/assets/72062416/c5fc97c1-9b82-4f2a-a3cf-4034676c2b87">
 <img width="380" alt="Screenshot 2023-09-30 at 1 09 21 AM" src="https://github.com/Yash-Dhrangdhariya/raftlabs_assignment/assets/72062416/677a2171-0a27-4989-a3ed-80f2d26e50fb">
