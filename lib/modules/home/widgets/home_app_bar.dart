@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/values/app_text_style.dart';
+
+import '../../../values/app_text_style.dart';
+import '../home_screen_store.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   HomeAppBar({super.key});

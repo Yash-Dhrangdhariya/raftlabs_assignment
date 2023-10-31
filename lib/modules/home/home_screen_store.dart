@@ -51,6 +51,7 @@ abstract class _HomeScreenStore with Store {
       );
 
       if (watchGetNews.data != null) {
+        if (news.isNotEmpty) news.clear();
         final data = DataHelper().toListOfNews(watchGetNews.data!);
         news = data.asObservable();
         isNewsLoading = false;

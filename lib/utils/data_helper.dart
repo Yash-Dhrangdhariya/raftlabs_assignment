@@ -1,5 +1,5 @@
-import 'package:raftlabs_assignment/models/news_model.dart';
-import 'package:raftlabs_assignment/models/user_model.dart';
+import '../models/news_model.dart';
+import '../models/user_model.dart';
 
 class DataHelper {
   factory DataHelper() => instance;

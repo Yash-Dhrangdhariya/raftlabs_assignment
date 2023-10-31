@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/modules/home/widgets/news_tile.dart';
+
+import '../home_screen_store.dart';
+import 'news_tile.dart';
 
 class NewsView extends StatelessWidget {
   NewsView({super.key});

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
-import 'package:raftlabs_assignment/values/app_routes.dart';
-import 'package:raftlabs_assignment/values/app_themes.dart';
 
-class RaftLabsAssignment extends StatelessWidget {
-  const RaftLabsAssignment({super.key});
+import 'utils/shared_preferences_helper.dart';
+import 'values/app_constants.dart';
+import 'values/app_routes.dart';
+import 'values/app_themes.dart';
+
+class SocialMediaApp extends StatelessWidget {
+  const SocialMediaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class RaftLabsAssignment extends StatelessWidget {
         ? Modular.setInitialRoute(Modular.initialRoute)
         : Modular.setInitialRoute(AppRoutes.splashScreen);
     return MaterialApp.router(
-      title: 'RaftLabs Assignment',
+      title: 'Social Media App',
       theme: AppThemes.lightTheme,
       scaffoldMessengerKey: AppConstants.scaffoldMessengerKey,
       routerConfig: Modular.routerConfig,

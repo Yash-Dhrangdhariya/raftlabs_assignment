@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:raftlabs_assignment/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/user_model.dart';
 import 'shared_preferences_keys.dart';
 
 class SharedPreferencesHelper {

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "428038298163-ejic1gbulr0fqal8rpr0ccoppdo7fmfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yashdhrangdhariya.raftlabs_assignment",
+            "certificate_hash": "a0143148de402f99df4352836da3a3566279a3c5"
+          }
+        },
+        {
           "client_id": "428038298163-seflf1s8chdfth97d7nilgd8vbhnt8gp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

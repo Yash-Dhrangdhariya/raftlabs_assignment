@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:raftlabs_assignment/modules/users/widgets/user_tile.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_service.dart';
-import 'package:raftlabs_assignment/utils/data_helper.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
+
+import '../../services/graphql/graphql_service.dart';
+import '../../utils/data_helper.dart';
+import '../../utils/shared_preferences_helper.dart';
+import 'widgets/user_tile.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});

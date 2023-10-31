@@ -37,13 +37,13 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # State Management
-  mobx: ^2.2.0
-  flutter_mobx: ^2.0.6+5
+  mobx: ^2.2.1
+  flutter_mobx: ^2.1.1
 
   # Firebase Services
-  firebase_core: ^2.16.0
-  firebase_auth: ^4.10.0
-  firebase_storage: ^11.2.6
+  firebase_core: ^2.20.0
+  firebase_auth: ^4.12.0
+  firebase_storage: ^11.4.0
 
   # JSON parsing
   json_annotation: ^4.8.1
@@ -59,7 +59,7 @@ dependencies:
   uuid: ^3.0.7
 
   # Offline Database
-  shared_preferences: ^2.2.1
+  shared_preferences: ^2.2.2
 
   # for selecting image
   image_picker: ^1.0.4
@@ -68,10 +68,12 @@ dependencies:
   graphql_flutter: ^5.1.2
 
   # image compress
-  flutter_image_compress: ^2.0.4
+  flutter_image_compress: ^2.1.0
 
   # Format Date
   intl: ^0.18.1
+
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -82,12 +84,11 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
-  very_good_analysis: ^5.0.0+1
-  build_runner: ^2.4.4
+  very_good_analysis: ^5.1.0
+  build_runner: ^2.4.6
   mobx_codegen: ^2.4.0
   json_serializable: ^6.7.1
-  freezed: ^2.4.1
+  freezed: ^2.4.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

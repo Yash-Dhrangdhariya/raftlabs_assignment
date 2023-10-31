@@ -1,11 +1,12 @@
 import 'dart:developer';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:raftlabs_assignment/models/news_model.dart';
-import 'package:raftlabs_assignment/models/user_model.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_mutations.dart';
-import 'package:raftlabs_assignment/services/graphql/graphql_queries.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
+
+import '../../models/news_model.dart';
+import '../../models/user_model.dart';
+import '../../values/app_constants.dart';
+import 'graphql_mutations.dart';
+import 'graphql_queries.dart';
 
 class GraphQLService {
   factory GraphQLService() => instance;

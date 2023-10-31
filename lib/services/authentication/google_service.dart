@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:raftlabs_assignment/models/user_model.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
+
+import '../../models/user_model.dart';
+import '../../values/app_constants.dart';
 
 class GoogleService {
   factory GoogleService() => instance;
