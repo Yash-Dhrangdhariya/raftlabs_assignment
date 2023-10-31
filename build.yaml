@@ -1,14 +1,9 @@
 targets:
   $default:
     builders:
-      ferry_generator|graphql_builder:
-        enabled: true
+      graphql_codegen:
         options:
-          schema: raftlabs_assignment|lib/schema.graphql
-          when_extensions:
-            when: true
-            maybeWhen: true
-      ferry_generator|serializer_builder:
-        enabled: true
-        options:
-          schema: raftlabs_assignment|lib/schema.graphql
+          namingSeparator: ""
+          clients:
+            - graphql
+            - graphql_flutter

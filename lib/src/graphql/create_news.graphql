@@ -1,4 +1,4 @@
-mutation CreateNews($author: String!, $authorId: String!, $title: String!, $description: String!, $image: String!) {
+mutation OnNews($author: String!, $authorId: String!, $title: String!, $description: String!, $image: String!) {
     createNewsArticle(author: $author, authorId: $authorId, title: $title, description: $description, image: $image) {
         _id
         author

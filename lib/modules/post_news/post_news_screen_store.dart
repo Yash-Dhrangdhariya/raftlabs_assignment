@@ -1,15 +1,16 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:ferry/ferry.dart' hide Store;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:raftlabs_assignment/modules/home/home_screen_store.dart';
-import 'package:raftlabs_assignment/src/graphql/__generated__/create_news.req.gql.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
+
+import '../../src/graphql/create_news.graphql.dart';
+import '../../values/app_client.dart';
+import '../../values/app_constants.dart';
+import '../home/home_screen_store.dart';
 
 part 'post_news_screen_store.g.dart';
 
@@ -73,14 +74,15 @@ abstract class _PostNewsScreenStore with Store {
 
       final firebaseImage = await data.ref.getDownloadURL();
 
-      Modular.get<TypedLink>().request(
-        GCreateNewsReq(
-          (b) => b
-            ..vars.author = user?.name
-            ..vars.authorId = user?.userId
-            ..vars.title = title
-            ..vars.description = description
-            ..vars.image = firebaseImage,
+      await AppClient.client.mutateOnNews(
+        OptionsMutationOnNews(
+          variables: VariablesMutationOnNews(
+            author: user?.name ?? 'Unknown',
+            authorId: user?.userId ?? 'Unknown',
+            title: title ?? '-',
+            description: description ?? '-',
+            image: firebaseImage,
+          ),
         ),
       );
     } catch (e) {

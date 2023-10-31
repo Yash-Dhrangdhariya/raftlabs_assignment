@@ -1,16 +1,11 @@
 import 'dart:developer';
 
-// ignore: implementation_imports
-import 'package:built_collection/src/list.dart';
-import 'package:ferry/ferry.dart' hide Store;
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
 
-import '../../src/graphql/__generated__/add_to_follow.req.gql.dart';
-import '../../src/graphql/__generated__/get_all_users.data.gql.dart';
-import '../../src/graphql/__generated__/get_all_users.req.gql.dart';
-import '../../src/graphql/__generated__/get_all_users.var.gql.dart';
+import '../../src/graphql/add_to_follow.graphql.dart';
+import '../../src/graphql/get_all_users.graphql.dart';
+import '../../utils/shared_preferences_helper.dart';
+import '../../values/app_client.dart';
 
 part 'users_screen_store.g.dart';
 
@@ -25,66 +20,64 @@ abstract class _UsersScreenStore with Store {
   bool isLoading = false;
 
   @observable
-  ObservableList<Observable<GGetAllUsersData_getUsersExcept?>> users =
+  ObservableList<Observable<QueryOnGetAllgetUsersExcept?>> users =
       ObservableList();
-
-  void listen(
-    OperationResponse<GGetAllUsersData, GGetAllUsersVars> value,
-  ) {
-    log('Data: ${value.data}', name: 'Listen');
-    if (value.data != null) {
-      users = value.data!.getUsersExcept!
-          .map(Observable.new)
-          .toList()
-          .asObservable();
-    }
-  }
 
   @action
   Future<void> onTapFollow({
     required String receiverUserId,
   }) async {
     final currentUser = SharedPreferencesHelper.instance.getLoginUser();
-    Modular.get<TypedLink>()
-        .request(
-      GAddToFollowReq(
-        (b) => b
-          ..vars.receivingUserId = receiverUserId
-          ..vars.sendingUserId = currentUser?.userId,
-      ),
-    )
-        .listen((event) {
-      if (event.data != null) {
-        final data = event.data!.addToFollow;
 
-        users.firstWhere((element) => element.value?.userId == receiverUserId)
-          ..value = GGetAllUsersData_getUsersExcept(
-            (b) => b
-              ..userId = data.userId
-              ..followers = ListBuilder(data.followers.map((p0) => p0))
-              ..followings = ListBuilder(data.followings.map((p0) => p0))
-              ..name = data.name
-              ..avatar = data.avatar
-              ..email = data.email
-              ..G_id = data.G_id
-              ..G__typename = data.G__typename,
-          )
-          ..reportChanged();
-      }
-    });
+    final results = await AppClient.client.mutateOnFollow(
+      OptionsMutationOnFollow(
+        variables: VariablesMutationOnFollow(
+          sendingUserId: currentUser!.userId,
+          receivingUserId: receiverUserId,
+        ),
+      ),
+    );
+
+    if (!results.hasException) {
+      final data = results.parsedData!.addToFollow;
+      users.firstWhere((element) => element.value?.userId == receiverUserId)
+        ..value = QueryOnGetAllgetUsersExcept(
+          $_id: data.$_id,
+          name: data.name,
+          userId: data.userId,
+          email: data.email,
+          avatar: data.avatar,
+          news: data.news,
+          followings: data.followings,
+          followers: data.followers,
+        )
+        ..reportChanged();
+    } else {
+      log('Error: ${results.exception?.graphqlErrors}', name: 'OnTapFollow');
+    }
   }
 
   Future<void> fetchUsers() async {
     isLoading = true;
     try {
-      Modular.get<TypedLink>()
-          .request(
-            GGetAllUsersReq(
-              (b) => b.vars.exceptUser =
-                  SharedPreferencesHelper().getLoginUser()?.userId ?? '',
-            ),
-          )
-          .listen(listen);
+      final result = await AppClient.client.queryOnGetAll(
+        OptionsQueryOnGetAll(
+          variables: VariablesQueryOnGetAll(
+            exceptUser: SharedPreferencesHelper().getLoginUser()?.userId ?? '',
+          ),
+        ),
+      );
+
+      if (result.hasException) {
+        log('Error: ${result.exception?.graphqlErrors}', name: 'Fetch Users');
+      } else {
+        if (result.parsedData?.getUsersExcept != null) {
+          users = result.parsedData!.getUsersExcept!
+              .map(Observable.new)
+              .toList()
+              .asObservable();
+        }
+      }
     } catch (e) {
       log('Error: $e', name: 'Fetch Users');
       throw Exception(e);

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../src/graphql/__generated__/create_user.data.gql.dart';
+import '../src/graphql/create_user.graphql.dart';
 import 'shared_preferences_keys.dart';
 
 class SharedPreferencesHelper {
@@ -19,16 +19,16 @@ class SharedPreferencesHelper {
         await SharedPreferences.getInstance(),
       );
 
-  Future<void> setLoginUser(GCreateUserData_createUserIfNotExists user) async {
+  Future<void> setLoginUser(MutationUsercreateUserIfNotExists user) async {
     await prefs.setString(
       PrefKeys.kUserInfo,
       jsonEncode(user.toJson()),
     );
   }
 
-  GCreateUserData_createUserIfNotExists? getLoginUser() {
+  MutationUsercreateUserIfNotExists? getLoginUser() {
     return (prefs.getString(PrefKeys.kUserInfo)?.isNotEmpty ?? false)
-        ? GCreateUserData_createUserIfNotExists.fromJson(
+        ? MutationUsercreateUserIfNotExists.fromJson(
             jsonDecode(prefs.getString(PrefKeys.kUserInfo) ?? '')
                 as Map<String, dynamic>,
           )

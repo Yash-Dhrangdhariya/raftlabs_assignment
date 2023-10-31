@@ -4,12 +4,7 @@ analyzer:
   exclude:
     - '**/*.g.dart'
     - '**/*.freezed.dart'
-    - '**/*.ast.gql.dart'
-    - '**/*.req.gql.dart'
-    - '**/*.data.gql.dart'
-    - '**/*.var.gql.dart'
-    - '**/*.gql.g.dart'
-    - '**/*.gql.dart'
+    - '**/*.graphql.dart'
   errors:
     invalid_annotation_target: ignore
 

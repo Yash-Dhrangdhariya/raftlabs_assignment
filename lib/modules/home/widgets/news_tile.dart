@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:raftlabs_assignment/src/graphql/__generated__/get_news.data.gql.dart';
-import 'package:raftlabs_assignment/utils/extension.dart';
-import 'package:raftlabs_assignment/values/app_colors.dart';
+
+import '../../../src/graphql/get_news.graphql.dart';
+import '../../../utils/extension.dart';
+import '../../../values/app_colors.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({
@@ -11,7 +12,7 @@ class NewsTile extends StatelessWidget {
     super.key,
   });
 
-  final GGetNewsData_getNews? news;
+  final QueryGetNewsgetNews? news;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class NewsTile extends StatelessWidget {
                             vertical: 4,
                           ),
                           child: Text(
-                            news?.publishedAt.value.toPublishedDate() ?? '-',
+                            news?.publishedAt.toPublishedDate() ?? '-',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,

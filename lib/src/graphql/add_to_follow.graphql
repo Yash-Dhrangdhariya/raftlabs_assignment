@@ -1,4 +1,4 @@
-mutation AddToFollow($sendingUserId: String!, $receivingUserId: String!) {
+mutation OnFollow($sendingUserId: String!, $receivingUserId: String!) {
     addToFollow(sendingUserId: $sendingUserId, receivingUserId: $receivingUserId) {
         _id
         name

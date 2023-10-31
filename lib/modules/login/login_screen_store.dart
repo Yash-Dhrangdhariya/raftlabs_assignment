@@ -1,12 +1,10 @@
-import 'package:ferry/ferry.dart' hide Store;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:raftlabs_assignment/services/authentication/google_service.dart';
-import 'package:raftlabs_assignment/src/graphql/__generated__/create_user.req.gql.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
 
-import '../../src/graphql/__generated__/create_user.data.gql.dart';
+import '../../services/authentication/google_service.dart';
+import '../../src/graphql/create_user.graphql.dart';
+import '../../utils/shared_preferences_helper.dart';
 import '../../values/app_routes.dart';
 
 part 'login_screen_store.g.dart';
@@ -20,7 +18,7 @@ abstract class _LoginScreenStore with Store {
   Future<void> signIn() async {
     isSignIn = true;
     try {
-      GCreateUserData_createUserIfNotExists? user;
+      MutationUsercreateUserIfNotExists? user;
       if (kIsWeb) {
         final data = await GoogleService().signInWithGoogleWeb();
         user = data;
@@ -32,17 +30,7 @@ abstract class _LoginScreenStore with Store {
         await SharedPreferencesHelper.instance.setLoginUser(
           user,
         );
-        Modular
-          ..get<TypedLink>().request(
-            GCreateUserReq(
-              (b) => b.vars
-                ..userId = user?.userId
-                ..email = user?.email
-                ..avatar = user?.avatar
-                ..name = user?.name,
-            ),
-          )
-          ..to.navigate(AppRoutes.splashScreen);
+        Modular.to.navigate(AppRoutes.splashScreen);
       }
     } catch (e) {
       throw Exception('Error: $e');

@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/users/users_screen.dart';
-import 'package:raftlabs_assignment/modules/users/users_screen_store.dart';
+
+import 'users_screen.dart';
+import 'users_screen_store.dart';
 
 class UsersModule extends Module {
   @override

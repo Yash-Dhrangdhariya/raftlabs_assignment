@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/login/login_screen_store.dart';
-import 'package:raftlabs_assignment/resources/images.dart';
-import 'package:raftlabs_assignment/values/app_text_style.dart';
+
+import '../../resources/images.dart';
+import '../../values/app_text_style.dart';
+import 'login_screen_store.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

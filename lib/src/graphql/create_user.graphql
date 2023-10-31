@@ -1,4 +1,4 @@
-mutation CreateUser($name: String!, $userId: String!, $email: String!, $avatar: String!) {
+mutation User($name: String!, $userId: String!, $email: String!, $avatar: String!) {
     createUserIfNotExists(name: $name, userId: $userId, email: $email, avatar: $avatar) {
         _id
         name

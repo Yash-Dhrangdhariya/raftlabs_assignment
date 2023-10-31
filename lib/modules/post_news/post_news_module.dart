@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/modules/post_news/post_news_screen.dart';
-import 'package:raftlabs_assignment/modules/post_news/post_news_screen_store.dart';
+
+import 'post_news_screen.dart';
+import 'post_news_screen_store.dart';
 
 class PostNewsModule extends Module {
   @override

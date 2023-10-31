@@ -1,4 +1,4 @@
-query GetAllUsers($exceptUser: String!) {
+query OnGetAll($exceptUser: String!) {
     getUsersExcept(exceptUser: $exceptUser) {
         _id
         name

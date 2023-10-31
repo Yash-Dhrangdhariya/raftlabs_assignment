@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/values/app_colors.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
-import 'package:raftlabs_assignment/values/app_text_style.dart';
 
+import '../../values/app_colors.dart';
+import '../../values/app_constants.dart';
+import '../../values/app_text_style.dart';
 import 'post_news_screen_store.dart';
 import 'widgets/blurred_button.dart';
 

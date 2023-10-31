@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:ferry/ferry.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:raftlabs_assignment/values/app_constants.dart';
 
-import '../../src/graphql/__generated__/create_user.data.gql.dart';
-import '../../src/graphql/__generated__/create_user.req.gql.dart';
+import '../../src/graphql/create_user.graphql.dart';
+import '../../values/app_client.dart';
+import '../../values/app_constants.dart';
 
 class GoogleService {
   factory GoogleService() => instance;
@@ -17,7 +15,7 @@ class GoogleService {
 
   static final instance = GoogleService._();
 
-  Future<GCreateUserData_createUserIfNotExists?> signInWithGoogle() async {
+  Future<MutationUsercreateUserIfNotExists?> signInWithGoogle() async {
     /// start auth process
     final currentUser = await GoogleSignIn().signIn();
 
@@ -50,7 +48,7 @@ class GoogleService {
     }
   }
 
-  Future<GCreateUserData_createUserIfNotExists?> signInWithGoogleWeb() async {
+  Future<MutationUsercreateUserIfNotExists?> signInWithGoogleWeb() async {
     final authProvider = GoogleAuthProvider();
     try {
       final userCredential = await FirebaseAuth.instance.signInWithPopup(
@@ -74,37 +72,27 @@ class GoogleService {
     }
   }
 
-  Future<GCreateUserData_createUserIfNotExists?> createUser({
+  Future<MutationUsercreateUserIfNotExists?> createUser({
     required String userId,
     required String email,
     required String avatar,
     required String name,
   }) async {
-    final completer = Completer<GCreateUserData_createUserIfNotExists>();
-
-    Modular.get<TypedLink>()
-        .request(
-      GCreateUserReq(
-        (b) => b.vars
-          ..userId = userId
-          ..email = email
-          ..avatar = avatar
-          ..name = name,
+    final result = await AppClient.client.mutateUser(
+      OptionsMutationUser(
+        variables: VariablesMutationUser(
+          name: name,
+          userId: userId,
+          email: email,
+          avatar: avatar,
+        ),
       ),
-    )
-        .listen(
-      (event) {
-        if (!event.loading) {
-          completer.complete(
-            event.data?.createUserIfNotExists,
-          );
-        } else {
-          if (event.hasErrors) {
-            completer.completeError(event.linkException!.originalException!);
-          }
-        }
-      },
     );
-    return completer.future;
+
+    if (!result.hasException) {
+      return result.parsedData?.createUserIfNotExists;
+    } else {
+      return null;
+    }
   }
 }

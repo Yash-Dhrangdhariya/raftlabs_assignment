@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:raftlabs_assignment/utils/shared_preferences_helper.dart';
 
-import '../../../src/graphql/__generated__/get_all_users.data.gql.dart';
+import '../../../src/graphql/get_all_users.graphql.dart';
+import '../../../utils/shared_preferences_helper.dart';
 import '../../../values/app_colors.dart';
 
 class UserTile extends StatelessWidget {
@@ -13,7 +13,7 @@ class UserTile extends StatelessWidget {
     super.key,
   });
 
-  final Observable<GGetAllUsersData_getUsersExcept?> user;
+  final Observable<QueryOnGetAllgetUsersExcept?> user;
   final VoidCallback onTapFollow;
 
   @override

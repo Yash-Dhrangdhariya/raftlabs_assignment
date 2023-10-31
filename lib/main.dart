@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:raftlabs_assignment/app_modules.dart';
-import 'package:raftlabs_assignment/raftlabs_assignment.dart';
 
+import 'app_modules.dart';
 import 'firebase_options.dart';
+import 'social_media_news_app.dart';
 import 'utils/shared_preferences_helper.dart';
 
 Future<void> main() async {
@@ -16,7 +16,7 @@ Future<void> main() async {
   runApp(
     ModularApp(
       module: AppModules(),
-      child: const RaftLabsAssignment(),
+      child: const SocialMediaNewsApp(),
     ),
   );
 }

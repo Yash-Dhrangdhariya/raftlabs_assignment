@@ -1,4 +1,4 @@
-query GetUser($userId: String!) {
+query OnGetUser($userId: String!) {
     userById(userId: $userId) {
         _id
         name
